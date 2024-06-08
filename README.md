@@ -14,7 +14,3 @@ Hover over the plot to see detailed information in the tooltip.
 Support:
 If you would like to support the development of this project, you can send DST to the following address: 0xB802289A02D67B339C1A7e4516aC3C4337F69AbA.
 
-Live Demo:
-Check out the live demo of this project hosted on GitHub Pages here.
-
-Feel free to explore, contribute, and provide feedback to improve this tool. Happy strategizing!
