@@ -70,6 +70,26 @@
             font-size: 16px;
             color: #333;
         }
+        .speedup-table {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        .speedup-table th, .speedup-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        .speedup-table th {
+            background-color: #f2f2f2;
+        }
+        .total-days {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 16px;
+            color: #333;
+        }
         @media (min-width: 600px) {
             .controls {
                 display: flex;
@@ -105,6 +125,61 @@
             If you want to support the website, send DST to this address: <strong>0xB802289A02D67B339C1A7e4516aC3C4337F69AbA</strong>
             <div class="cursive">Every little helps</div>
         </div>
+        <div class="total-days" id="totalDays">Total Speed-Up Days: 0</div>
+        <table class="speedup-table">
+            <thead>
+                <tr>
+                    <th>Speed-Up</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1 Minute</td>
+                    <td><input type="number" id="speedup1m" value="0" min="0"></td>
+                </tr>
+                <tr>
+                    <td>5 Minutes</td>
+                    <td><input type="number" id="speedup5m" value="0" min="0"></td>
+                </tr>
+                <tr>
+                    <td>10 Minutes</td>
+                    <td><input type="number" id="speedup10m" value="0" min="0"></td>
+                </tr>
+                <tr>
+                    <td>30 Minutes</td>
+                    <td><input type="number" id="speedup30m" value="0" min="0"></td>
+                </tr>
+                <tr>
+                    <td>1 Hour</td>
+                    <td><input type="number" id="speedup1h" value="0" min="0"></td>
+                </tr>
+                <tr>
+                    <td>3 Hours</td>
+                    <td><input type="number" id="speedup3h" value="0" min="0"></td>
+                </tr>
+                <tr>
+                    <td>8 Hours</td>
+                    <td><input type="number" id="speedup8h" value="0" min="0"></td>
+                </tr>
+                <tr>
+                    <td>1 Day</td>
+                    <td><input type="number" id="speedup1d" value="0" min="0"></td>
+                </tr>
+                <tr>
+                    <td>3 Days</td>
+                    <td><input type="number" id="speedup3d" value="0" min="0"></td>
+                </tr>
+                <tr>
+                    <td>7 Days</td>
+                    <td><input type="number" id="speedup7d" value="0" min="0"></td>
+                </tr>
+                <tr>
+                    <td>30 Days</td>
+                    <td><input type="number" id="speedup30d" value="0" min="0"></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
     <script>
@@ -226,6 +301,41 @@
                     .style("top", height - margin.bottom - 50 + "px");
             }
         }
+
+        function calculateTotalSpeedupDays() {
+            const speedupValues = {
+                "1m": 1 / 60 / 24,
+                "5m": 5 / 60 / 24,
+                "10m": 10 / 60 / 24,
+                "30m": 30 / 60 / 24,
+                "1h": 1 / 24,
+                "3h": 3 / 24,
+                "8h": 8 / 24,
+                "1d": 1,
+                "3d": 3,
+                "7d": 7,
+                "30d": 30
+            };
+
+            let totalDays = 0;
+            totalDays += parseInt(document.getElementById("speedup1m").value) * speedupValues["1m"];
+            totalDays += parseInt(document.getElementById("speedup5m").value) * speedupValues["5m"];
+            totalDays += parseInt(document.getElementById("speedup10m").value) * speedupValues["10m"];
+            totalDays += parseInt(document.getElementById("speedup30m").value) * speedupValues["30m"];
+            totalDays += parseInt(document.getElementById("speedup1h").value) * speedupValues["1h"];
+            totalDays += parseInt(document.getElementById("speedup3h").value) * speedupValues["3h"];
+            totalDays += parseInt(document.getElementById("speedup8h").value) * speedupValues["8h"];
+            totalDays += parseInt(document.getElementById("speedup1d").value) * speedupValues["1d"];
+            totalDays += parseInt(document.getElementById("speedup3d").value) * speedupValues["3d"];
+            totalDays += parseInt(document.getElementById("speedup7d").value) * speedupValues["7d"];
+            totalDays += parseInt(document.getElementById("speedup30d").value) * speedupValues["30d"];
+
+            document.getElementById("totalDays").textContent = `Total Speed-Up Days: ${totalDays.toFixed(2)}`;
+        }
+
+        document.querySelectorAll(".speedup-table input").forEach(input => {
+            input.addEventListener("input", calculateTotalSpeedupDays);
+        });
 
         document.getElementById("updateButton").addEventListener("click", () => {
             const maxDays = parseInt(document.getElementById("maxDays").value);
